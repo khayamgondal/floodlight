@@ -13,7 +13,7 @@ import java.io.IOException;
 public class SOSRouteSerializer extends JsonSerializer<ISOSRoute> {
 
 	@Override
-	public void serialize(ISOSRoute rt, JsonGenerator jGen, SerializerProvider sProv)
+	public void serialize(ISOSRoute rt, JsonGenerator jGen, SerializerProvider sProv) 
 			throws IOException, JsonProcessingException {
 		jGen.configure(Feature.WRITE_NUMBERS_AS_STRINGS, true);
 

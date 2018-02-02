@@ -13,7 +13,7 @@ import java.util.UUID;
 public class SOSAgentSerializer extends JsonSerializer<ISOSAgent> {
 
 	@Override
-	public void serialize(ISOSAgent agent, JsonGenerator jGen, SerializerProvider sProv)
+	public void serialize(ISOSAgent agent, JsonGenerator jGen, SerializerProvider sProv) 
 			throws IOException, JsonProcessingException {
 		jGen.configure(Feature.WRITE_NUMBERS_AS_STRINGS, true);
 

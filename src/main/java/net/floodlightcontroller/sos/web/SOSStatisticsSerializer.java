@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class SOSStatisticsSerializer extends JsonSerializer<ISOSStatistics> {
 	@Override
-	public void serialize(ISOSStatistics stats, JsonGenerator jGen, SerializerProvider sProv) 
+	public void serialize(ISOSStatistics stats, JsonGenerator jGen, SerializerProvider sProv)
 			throws IOException, JsonProcessingException {
 		jGen.configure(Feature.WRITE_NUMBERS_AS_STRINGS, true);
 

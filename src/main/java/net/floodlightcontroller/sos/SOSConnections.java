@@ -36,9 +36,9 @@ public class SOSConnections  {
 	 * @return
 	 */
 	public SOSConnection addConnection(SOSRoute clientToAgent, SOSRoute interAgent,
-			SOSRoute serverToAgent, int numSockets, 
-			int queueCapacity, int bufferSize,
-			int flowTimeout) {
+                                       SOSRoute serverToAgent, int numSockets,
+                                       int queueCapacity, int bufferSize,
+                                       int flowTimeout) {
 		SOSConnection conn = new SOSConnection(clientToAgent, interAgent,
 				serverToAgent, numSockets,
 				queueCapacity, bufferSize,

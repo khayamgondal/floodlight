@@ -12,7 +12,7 @@ import java.io.IOException;
 public class SOSTerminationStatsSerializer extends JsonSerializer<ISOSTerminationStats> {
 
 	@Override
-	public void serialize(ISOSTerminationStats stats, JsonGenerator jGen, SerializerProvider sProv) 
+	public void serialize(ISOSTerminationStats stats, JsonGenerator jGen, SerializerProvider sProv)
 			throws IOException, JsonProcessingException {
 		jGen.configure(Feature.WRITE_NUMBERS_AS_STRINGS, true);
 
