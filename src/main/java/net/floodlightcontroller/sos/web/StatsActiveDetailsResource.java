@@ -1,0 +1,32 @@
+package net.floodlightcontroller.sos.web;
+
+import net.floodlightcontroller.sos.ISOSConnection;
+import net.floodlightcontroller.sos.ISOSService;
+import org.restlet.data.Header;
+import org.restlet.engine.header.HeaderConstants;
+import org.restlet.resource.Get;
+import org.restlet.resource.ServerResource;
+import org.restlet.util.Series;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
+
+public class StatsActiveDetailsResource extends ServerResource {
+	protected static Logger log = LoggerFactory.getLogger(StatsActiveDetailsResource.class);
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Get
+	public Collection<ISOSConnection> handleStatistics() {
+		Series<Header> responseHeaders = (Series<Header>) getResponse().getAttributes().get("org.restlet.http.headers"); 
+	    getResponse().getAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
+	    if (responseHeaders == null) {
+	    	responseHeaders = new Series(Header.class);
+	    	getResponse().getAttributes().put(HeaderConstants.ATTRIBUTE_HEADERS, responseHeaders);
+	    }
+	    responseHeaders.add(new Header("Access-Control-Allow-Origin", "http://openflow.sites.clemson.edu")); 
+		
+		ISOSService sosService = (ISOSService) getContext().getAttributes().get(ISOSService.class.getCanonicalName());
+		return sosService.getStatistics().getActiveConnections();
+	}
+}
