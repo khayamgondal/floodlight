@@ -8,7 +8,7 @@ build_job:
     - mvn package -Dmaven.test.skip=true
   artifacts:
     paths:
-      - target/sosagent.jar
+      - target/floodlight.jar
     expire_in: 1 day
 
 test_job:
