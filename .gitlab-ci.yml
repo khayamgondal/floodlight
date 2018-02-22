@@ -1,0 +1,17 @@
+stages:
+  - build
+  - test
+
+build_job:
+  stage: build
+  script:
+    - mvn package -Dmaven.test.skip=true
+  artifacts:
+    paths:
+      - target/sosagent.jar
+    expire_in: 1 day
+
+test_job:
+  stage: test
+  script:
+  - mvn test
