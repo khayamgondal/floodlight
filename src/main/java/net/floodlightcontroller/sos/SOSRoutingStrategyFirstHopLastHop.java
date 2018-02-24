@@ -46,7 +46,7 @@ public class SOSRoutingStrategyFirstHopLastHop implements ISOSRoutingStrategy {
 				route.getRouteType() != SOSRouteType.SERVER_2_AGENT) {
 			throw new IllegalArgumentException("Only route types client-to-agent or server-to-agent are supported.");
 		}
-
+		log.info("KHAYAM");
 		int flowCount = conn.getFlowNames().size() + 1;
 		String flowNamePrefix = "sos-aa-" + conn.getName() + "-#";
 		Set<String> flows = new HashSet<String>();
@@ -57,6 +57,7 @@ public class SOSRoutingStrategyFirstHopLastHop implements ISOSRoutingStrategy {
 			NodePortTuple in = path.get(index - 1);
 			NodePortTuple out = path.get(index);
 			if (in.equals(route.getRouteFirstHop())) { /* handles flows 1, 4, 12, 13 */
+				log.info("KHAYAM first hop");
 				/* Perform redirection here */
 				OFFactory factory = SOS.switchService.getSwitch(in.getNodeId()).getOFFactory();
 				OFFlowAdd.Builder flow = factory.buildFlowAdd();
@@ -157,6 +158,8 @@ public class SOSRoutingStrategyFirstHopLastHop implements ISOSRoutingStrategy {
 				flows.add(flowName);
 				log.info("Added to/from-agent flow {}, {} on SW " + SOS.switchService.getSwitch(in.getNodeId()).getId(), flowName, flow.build());
 			} else if (out.equals(route.getRouteLastHop())) { /* handles flows 2, 3, 11, 14 */
+				log.info("KHAYAM last hop");
+
 				/* Perform rewrite here */
 				OFFactory factory = SOS.switchService.getSwitch(in.getNodeId()).getOFFactory();
 				OFFlowAdd.Builder flow = factory.buildFlowAdd();
