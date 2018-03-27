@@ -1153,15 +1153,15 @@ public class SOS implements IOFMessageListener, IOFSwitchListener, IFloodlightMo
 	private void pushRoute(SOSRoute route, SOSConnection conn) {
 		ISOSRoutingStrategy rs;
 		if (route.getRouteType() == SOSRouteType.CLIENT_2_AGENT) {
-		//	rs = new SOSRoutingStrategyFirstHopLastHop(true);
-			rs = new SOSRoutingStrategySingleHop(true);
+			rs = new SOSRoutingStrategyFirstHopLastHop(true);
+		//	rs = new SOSRoutingStrategySingleHop(true);
 			rs.pushRoute(route, conn);
 		} else if (route.getRouteType() == SOSRouteType.AGENT_2_AGENT) {
 			rs = new SOSRoutingStrategyInterAgent();
 			rs.pushRoute(route, conn);
 		} else if (route.getRouteType() == SOSRouteType.SERVER_2_AGENT) {
-		//	rs = new SOSRoutingStrategyFirstHopLastHop(true);
-			rs = new SOSRoutingStrategySingleHop(true);
+			rs = new SOSRoutingStrategyFirstHopLastHop(true);
+		//	rs = new SOSRoutingStrategySingleHop(true);
 			rs.pushRoute(route, conn);
 		} else {
 			log.error("Received invalid SOSRouteType of {}", route.getRouteType());

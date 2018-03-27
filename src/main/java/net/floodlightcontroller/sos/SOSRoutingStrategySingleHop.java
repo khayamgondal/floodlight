@@ -45,13 +45,17 @@ public class SOSRoutingStrategySingleHop implements ISOSRoutingStrategy{
             String flowNamePrefix = "sos-aa-" + conn.getName() + "-#";
             Set<String> flows = new HashSet<String>();
             List<NodePortTuple> path = route.getRoute().getPath();
+       /*     for (NodePortTuple p: path
+                 ) {
+                log.info("KKK" + p.toString());
+            }*/
 
             /* src--[p=l, s=A], [s=A, p=m], [p=n, s=B], [s=B, p=o], [p=q, s=C], [s=C, p=r]--dst */
             for (int index = path.size() - 1; index > 0; index -= 2) {
                 NodePortTuple in = path.get(index - 1);
                 NodePortTuple out = path.get(index);
+                log.info("IN & OUT" + in.toString() + " " + out.toString());
                 if (in.equals(route.getRouteFirstHop())) { /* handles flows 1, 4, 12, 13 */
-                    log.info("KHAYAM first hop");
                     /* Perform redirection here */
                     OFFactory factory = SOS.switchService.getSwitch(in.getNodeId()).getOFFactory();
                     OFFlowAdd.Builder flow = factory.buildFlowAdd();
@@ -151,14 +155,14 @@ public class SOSRoutingStrategySingleHop implements ISOSRoutingStrategy{
                     SOS.sfp.addFlow(flowName, flow.build(), SOS.switchService.getSwitch(in.getNodeId()).getId());
                     flows.add(flowName);
                     log.info("Added to/from-agent flow {}, {} on SW " + SOS.switchService.getSwitch(in.getNodeId()).getId(), flowName, flow.build());
-                } else if (out.equals(route.getRouteFirstHop())) { /* handles flows 2, 3, 11, 14 */
-                    log.info("KHAYAM last hop");
+
+//                } else if (out.equals(route.getRouteFirstHop())) { /* handles flows 2, 3, 11, 14 */
 
                     /* Perform rewrite here */
-                    OFFactory factory = SOS.switchService.getSwitch(in.getNodeId()).getOFFactory();
-                    OFFlowAdd.Builder flow = factory.buildFlowAdd();
-                    Match.Builder match = factory.buildMatch();
-                    ArrayList<OFAction> actionList = new ArrayList<OFAction>();
+                     factory = SOS.switchService.getSwitch(in.getNodeId()).getOFFactory();
+                    flow = factory.buildFlowAdd();
+                     match = factory.buildMatch();
+                     actionList = new ArrayList<OFAction>();
 
                     match.setExact(MatchField.IN_PORT, in.getPortId());
                     match.setExact(MatchField.ETH_TYPE, EthType.IPv4);
@@ -202,7 +206,7 @@ public class SOSRoutingStrategySingleHop implements ISOSRoutingStrategy{
                     flow.setPriority(32767);
                     flow.setIdleTimeout(conn.getFlowTimeout());
 
-                    String flowName = flowNamePrefix + flowCount++;
+                     flowName = flowNamePrefix + flowCount++;
                     SOS.sfp.addFlow(flowName, flow.build(), SOS.switchService.getSwitch(in.getNodeId()).getId());
                     flows.add(flowName);
                     log.info("Added to/from-agent flow {}, {} on SW " + SOS.switchService.getSwitch(in.getNodeId()).getId(), flowName, flow.build());
