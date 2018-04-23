@@ -691,7 +691,7 @@ public class SOS implements IOFMessageListener, IOFSwitchListener, IFloodlightMo
 							agentNumParallelSockets, agentQueueCapacity, bufferSize, flowTimeout);
 					statistics.addActiveConnection(newSOSconnection);
 
-					log.debug("Starting new SOS session: \r\n" + newSOSconnection.toString());
+					log.info("Starting new SOS session: \r\n" + newSOSconnection.toString());
 					/* Send UDP messages to the home and foreign agents */
 					//log.debug("Sending UDP information packets to client-side and server-side agents");
 					//sendInfoToAgent(cntx, newSOSconnection, true); /* home */
