@@ -26,10 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.floodlightcontroller.core.IOFConnection;
-import net.floodlightcontroller.core.IOFSwitch;
-import net.floodlightcontroller.core.LogicalOFMessageCategory;
-import net.floodlightcontroller.core.SwitchDescription;
+import net.floodlightcontroller.core.*;
 import net.floodlightcontroller.core.internal.OFConnection;
 import net.floodlightcontroller.core.internal.TableFeatures;
 
@@ -347,6 +344,11 @@ public class OFMessageDamperMockSwitch implements IOFSwitch {
 	@Override
 	public U64 getLatency() {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IOFPipeline getOFPipeline() {
 		return null;
 	}
 }

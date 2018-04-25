@@ -81,7 +81,7 @@ public class OFSwitchBaseTest {
 
     private static class OFSwitchTest extends OFSwitch {
         public OFSwitchTest(IOFConnectionBackend connection, IOFSwitchManager switchManager) {
-            super(connection, OFFactories.getFactory(OFVersion.OF_13), switchManager, DatapathId.of(1));
+            super(connection, OFFactories.getFactory(OFVersion.OF_13), switchManager, DatapathId.of(1), new SwitchDescription());
         }
 
         @Override

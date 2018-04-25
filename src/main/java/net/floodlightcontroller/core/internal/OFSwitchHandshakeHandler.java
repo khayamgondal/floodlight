@@ -475,57 +475,59 @@ public class OFSwitchHandshakeHandler implements IOFConnectionListener {
 		 * each table. This is priority=0 with no Match.
 		 */
 		if (this.sw.getOFFactory().getVersion().compareTo(OFVersion.OF_13) >= 0) {
-			/*
-			 * Remove the default flow if it's present.
-			 */
-			OFFlowDeleteStrict deleteFlow = this.factory.buildFlowDeleteStrict()
-					.setTableId(TableId.ALL)
-					.setOutPort(OFPort.CONTROLLER)
+			sw.getOFPipeline().addDefaultFlows(sw);
+
+/*			*//*
+			 * remove the default flow if it's present.
+			 *//*
+			offlowdeletestrict deleteflow = this.factory.buildflowdeletestrict()
+					.settableid(tableid.all)
+					.setoutport(ofport.controller)
 					.build();
-			this.sw.write(deleteFlow);
+			this.sw.write(deleteflow);
 
-			ArrayList<OFAction> actions = new ArrayList<OFAction>(1);
-			actions.add(factory.actions().output(OFPort.CONTROLLER, 0xffFFffFF));
-			ArrayList<OFMessage> flows = new ArrayList<OFMessage>();
+			arraylist<ofaction> actions = new arraylist<ofaction>(1);
+			actions.add(factory.actions().output(ofport.controller, 0xffffffff));
+			arraylist<ofmessage> flows = new arraylist<ofmessage>();
 
-			/* If we received a table features reply, iterate over the tables */
-			if (!this.sw.getTables().isEmpty()) {
-				short missCount = 0;
-				for (TableId tid : this.sw.getTables()) {
-					/* Only add the flow if the table exists and if it supports sending to the controller */
-					TableFeatures tf = this.sw.getTableFeatures(tid);
-					if (tf != null && (missCount < this.sw.getMaxTableForTableMissFlow().getValue())) {
-						if (tf.getPropApplyActionsMiss() != null) {
-							for (OFActionId aid : tf.getPropApplyActionsMiss().getActionIds()) {
-								if (aid.getType() == OFActionType.OUTPUT) { /* The assumption here is that OUTPUT includes the special port CONTROLLER... */
-									OFFlowAdd defaultFlow = this.factory.buildFlowAdd()
-											.setTableId(tid)
-											.setPriority(0)
-											.setInstructions(Collections.singletonList((OFInstruction) this.factory.instructions().buildApplyActions().setActions(actions).build()))
+			*//* if we received a table features reply, iterate over the tables *//*
+			if (!this.sw.gettables().isempty()) {
+				short misscount = 0;
+				for (tableid tid : this.sw.gettables()) {
+					*//* only add the flow if the table exists and if it supports sending to the controller *//*
+					tablefeatures tf = this.sw.gettablefeatures(tid);
+					if (tf != null && (misscount < this.sw.getmaxtablefortablemissflow().getvalue())) {
+						if (tf.getpropapplyactionsmiss() != null) {
+							for (ofactionid aid : tf.getpropapplyactionsmiss().getactionids()) {
+								if (aid.gettype() == ofactiontype.output) { *//* the assumption here is that output includes the special port controller... *//*
+									offlowadd defaultflow = this.factory.buildflowadd()
+											.settableid(tid)
+											.setpriority(0)
+											.setinstructions(collections.singletonlist((ofinstruction) this.factory.instructions().buildapplyactions().setactions(actions).build()))
 											.build();
-									flows.add(defaultFlow);
-									break; /* Stop searching for actions and go to the next table in the list */
+									flows.add(defaultflow);
+									break; *//* stop searching for actions and go to the next table in the list *//*
 								}
 							}
 						}
 					}
-					missCount++;
+					misscount++;
 				}
-			} else { /* Otherwise, use the number of tables starting at TableId=0 as indicated in the features reply */
-				short missCount = 0;
-				for (short tid = 0; tid < this.sw.getNumTables(); tid++, missCount++) {
-					if (missCount < this.sw.getMaxTableForTableMissFlow().getValue()) { /* Only insert if we want it */
-						OFFlowAdd defaultFlow = this.factory.buildFlowAdd()
-								.setTableId(TableId.of(tid))
-								.setPriority(0)
-								.setActions(actions)
+			} else { *//* otherwise, use the number of tables starting at tableid=0 as indicated in the features reply *//*
+				short misscount = 0;
+				for (short tid = 0; tid < this.sw.getnumtables(); tid++, misscount++) {
+					if (misscount < this.sw.getmaxtablefortablemissflow().getvalue()) { *//* only insert if we want it *//*
+						offlowadd defaultflow = this.factory.buildflowadd()
+								.settableid(tableid.of(tid))
+								.setpriority(0)
+								.setactions(actions)
 								.build();
-						flows.add(defaultFlow);
+						flows.add(defaultflow);
 					}
 				}
 			}
 			this.sw.write(flows);
-		}
+	*/	}
 	}
 
 	/**

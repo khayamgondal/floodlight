@@ -365,4 +365,10 @@ public interface IOFSwitch extends IOFMessageWriter {
 	 * @return milliseconds
 	 */
 	public U64 getLatency();
+
+    /**
+          * Get the OpenFlow pipeline in use by the switch.
+          * @return an IOFPipeline object that specifies the OpenFlow pipeline.
+         */
+	public IOFPipeline getOFPipeline();
 }

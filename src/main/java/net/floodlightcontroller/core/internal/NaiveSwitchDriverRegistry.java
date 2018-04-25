@@ -87,7 +87,7 @@ class NaiveSwitchDriverRegistry implements ISwitchDriverRegistry {
             }
         }
         // no switch found
-        IOFSwitchBackend sw = new OFSwitch(connection, factory, switchManager, id);
+        IOFSwitchBackend sw = new OFSwitch(connection, factory, switchManager, id, description);
         sw.setSwitchProperties(description);
         return sw;
     }

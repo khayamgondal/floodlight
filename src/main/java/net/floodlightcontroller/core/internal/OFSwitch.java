@@ -39,16 +39,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 
-import net.floodlightcontroller.core.IOFConnection;
-import net.floodlightcontroller.core.IOFConnectionBackend;
-import net.floodlightcontroller.core.IOFSwitchBackend;
-import net.floodlightcontroller.core.LogicalOFMessageCategory;
-import net.floodlightcontroller.core.PortChangeEvent;
-import net.floodlightcontroller.core.PortChangeType;
-import net.floodlightcontroller.core.SwitchDescription;
-import net.floodlightcontroller.core.SwitchDriverSubHandshakeAlreadyStarted;
-import net.floodlightcontroller.core.SwitchDriverSubHandshakeCompleted;
-import net.floodlightcontroller.core.SwitchDriverSubHandshakeNotStarted;
+import net.floodlightcontroller.core.*;
 import net.floodlightcontroller.core.util.AppCookie;
 import net.floodlightcontroller.core.util.URIUtil;
 
@@ -104,7 +95,8 @@ public class OFSwitch implements IOFSwitchBackend {
 
 	protected final ConcurrentMap<Object, Object> attributes;
 	protected final IOFSwitchManager switchManager;
-
+	/* Change the visibility on this before pushing */
+	public IOFPipeline ofpipeline;
 	/* Switch features from initial featuresReply */
 	protected Set<OFCapabilities> capabilities;
 	protected long buffers;
@@ -144,7 +136,7 @@ public class OFSwitch implements IOFSwitchBackend {
 	}
 
 	public OFSwitch(IOFConnectionBackend connection, @Nonnull OFFactory factory, @Nonnull IOFSwitchManager switchManager,
-			@Nonnull DatapathId datapathId) {
+			@Nonnull DatapathId datapathId, SwitchDescription switchDescription) {
 		if(connection == null)
 			throw new NullPointerException("connection must not be null");
 		if(!connection.getAuxId().equals(OFAuxId.MAIN))
@@ -178,6 +170,11 @@ public class OFSwitch implements IOFSwitchBackend {
 
 		this.tableFeaturesByTableId = new HashMap<TableId, TableFeatures>();
 		this.tables = new ArrayList<TableId>();
+
+		// Switch's description and OpenFlow pipeline
+		this.description = switchDescription;
+		this.ofpipeline = OFPipelines.getPipelineFromDescription(switchDescription);
+		log.debug("{} - OpenFlow pipeline chosen: {}", this.datapathId, this.ofpipeline.getClass().getSimpleName());
 	}
 
 	private static int ident(int i) {
@@ -1340,4 +1337,8 @@ public class OFSwitch implements IOFSwitchBackend {
 	public U64 getLatency() {
 		return this.connections.get(OFAuxId.MAIN).getLatency();
 	}
+	@Override
+	public IOFPipeline getOFPipeline() {
+				return this.ofpipeline;
+			}
 }

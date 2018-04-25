@@ -26,14 +26,11 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.floodlightcontroller.core.*;
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
-import net.floodlightcontroller.core.IOFSwitchBackend;
-import net.floodlightcontroller.core.SwitchDriverSubHandshakeAlreadyStarted;
-import net.floodlightcontroller.core.SwitchDriverSubHandshakeCompleted;
-import net.floodlightcontroller.core.SwitchDriverSubHandshakeNotStarted;
 import net.floodlightcontroller.core.util.URIUtil;
 
 import org.projectfloodlight.openflow.protocol.OFBsnControllerConnection;
@@ -56,7 +53,7 @@ public class OFSwitchTest {
 	public void setUp() throws Exception {
 		MockOFConnection mockConnection = new MockOFConnection(DatapathId.of(1), OFAuxId.MAIN);
 		sw = new OFSwitch(mockConnection, OFFactories.getFactory(OFVersion.OF_10),
-				EasyMock.createMock(IOFSwitchManager.class), DatapathId.of(1));
+				EasyMock.createMock(IOFSwitchManager.class), DatapathId.of(1), new SwitchDescription());
 	}
 
 	@Test

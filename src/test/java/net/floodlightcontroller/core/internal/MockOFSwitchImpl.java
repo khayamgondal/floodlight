@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import net.floodlightcontroller.core.SwitchDescription;
 import org.easymock.EasyMock;
 import org.projectfloodlight.openflow.protocol.OFCapabilities;
 import org.projectfloodlight.openflow.protocol.OFFactories;
@@ -27,7 +28,7 @@ public class MockOFSwitchImpl extends OFSwitch {
 
     public MockOFSwitchImpl(MockOFConnection connection) {
         super(connection, OFFactories.getFactory(OFVersion.OF_10),
-              EasyMock.createMock(IOFSwitchManager.class), connection.getDatapathId());
+              EasyMock.createMock(IOFSwitchManager.class), connection.getDatapathId(), new SwitchDescription());
         statsMap = new HashMap<OFStatsType, List<OFStatsReply>>();
     }
 
