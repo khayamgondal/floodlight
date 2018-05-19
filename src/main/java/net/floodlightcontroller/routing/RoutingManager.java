@@ -125,6 +125,10 @@ public class RoutingManager implements IFloodlightModule, IRoutingService {
     
     @Override
     public boolean forceRecompute() {
+        log.info("Current all broadcast port after recommputing is {}", tm.getAllBroadcastPorts().toString());
+        log.info("Current all links after recommputing is {}", tm.getAllLinks().toString());
+        log.info("Current all external inter cluster links after recommputing is {}", tm.getExternalInterClusterLinks().toString());
+        log.info("Current all internal inter cluster links after recommputing is {}", tm.getInternalInterClusterLinks().toString());
         return tm.forceRecompute();
     }
 

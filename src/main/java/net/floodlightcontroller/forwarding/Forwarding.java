@@ -500,6 +500,10 @@ public class Forwarding extends ForwardingBase implements IFloodlightModule, IOF
                 dstAp.getNodeId(),
                 dstAp.getPortId());
 
+
+        log.info("Path is {}", path.toString());
+//        log.info("Topology is {}", topologyService.getAllLinks());
+
         Match m = createMatchFromPacket(sw, srcPort, pi, cntx);
 
         if (! path.getPath().isEmpty()) {
