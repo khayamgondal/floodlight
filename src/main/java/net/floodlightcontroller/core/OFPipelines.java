@@ -30,6 +30,7 @@ public class OFPipelines {
     }
 
     public static IOFPipeline of(OFPipelineTypes p) {
+        log.info("KKHAYAM {}", p.name());
         switch(p) {
             case OVS:
                 return PrecachedPipeline.ovspipeline;
