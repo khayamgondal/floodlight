@@ -19,6 +19,7 @@ public class SOSWebRoutable implements RestletRoutable {
     public Restlet getRestlet(Context context) {
         Router router = new Router(context);
         router.attach("/agent/{" + STR_OPERATION + "}/json", AgentResource.class);
+        router.attach("/connection/json", ConnectionResource.class);
         router.attach("/whitelist/{" + STR_OPERATION + "}/json", WhitelistResource.class);
         router.attach("/module/{" + STR_OPERATION + "}/json", ModuleResource.class);
         router.attach("/config/json", ConfigResource.class);

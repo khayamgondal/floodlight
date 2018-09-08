@@ -738,7 +738,7 @@ public class SOS implements IOFMessageListener, IOFSwitchListener, IFloodlightMo
 			} /* END IF TCP packet */
 			else if (l3.getProtocol().equals(IpProtocol.UDP)) {
 				UDP l4 = (UDP) l3.getPayload();
-
+//khayam working on termination
 				for (SOSAgent agent : agents) {
 					if (agent.getIPAddr().equals(l3.getSourceAddress()) /* FROM known agent */
 							&& agent.getFeedbackPort().equals(l4.getDestinationPort())) { /* TO our feedback port */
@@ -1367,7 +1367,12 @@ public class SOS implements IOFMessageListener, IOFSwitchListener, IFloodlightMo
 		}
 	}
 
-    @Override
+	@Override
+	public SOSConnections getSosConnections() {
+		return sosConnections;
+	}
+
+	@Override
     public void switchDeactivated(DatapathId switchId) {
         // TODO Auto-generated method stub
         

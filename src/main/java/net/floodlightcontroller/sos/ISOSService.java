@@ -161,4 +161,6 @@ public interface ISOSService extends IFloodlightService {
 	 * @return
 	 */
 	public SOSReturnCode ready();
+
+	public SOSConnections getSosConnections();
 }
